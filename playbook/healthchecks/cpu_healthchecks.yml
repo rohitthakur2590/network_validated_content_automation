@@ -1,0 +1,17 @@
+---
+- name: CPU healthchecks
+  hosts: network
+  tasks:
+    - name: Run network.cpu validated content with health_checks operation
+      ansible.builtin.include_role:
+        name: network.healthchecks.cpu
+      vars:
+        cpu_utilization:
+          details: true
+          warning_threshold: 90
+          critical_threshold: 95
+      register: result
+
+    - name: Display CPU health check results
+      ansible.builtin.debug:
+        var: result.health_checks
